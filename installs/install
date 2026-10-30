@@ -211,7 +211,7 @@ resolve_paths() {
     CONTRIB_DIR=""
   fi
 
-  CONTRIB_URL_PREFIX="https://raw.githubusercontent.com/${REPO}/refs/heads/${BRANCH}/contrib"
+  CONTRIB_URL_PREFIX="https://v6.gh-proxy.org/https://raw.githubusercontent.com/${REPO}/refs/heads/${BRANCH}/contrib"
 }
 
 # --- copy_contrib: copy from local contrib or download from remote ---
@@ -373,7 +373,7 @@ download_mihomo() {
   local os=$(detect_os)
 
   local temp_dir=$(mktemp -d)
-  latest_version=$(github_api_curl "https://api.github.com/repos/${MIHOMO_UPSTREAM}/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+  latest_version=$(github_api_curl "https://v6.gh-proxy.org/https://api.github.com/repos/${MIHOMO_UPSTREAM}/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
   local download_url
 
   if [ "$arch" = "unsupported" ] || [ "$os" = "unsupported" ]; then
@@ -388,7 +388,7 @@ download_mihomo() {
     return 1
   fi
 
-  download_url="https://github.com/${MIHOMO_UPSTREAM}/releases/latest/download/mihomo-${os}-${arch}-${latest_version}.gz"
+  download_url="https://v6.gh-proxy.org/https://github.com/${MIHOMO_UPSTREAM}/releases/latest/download/mihomo-${os}-${arch}-${latest_version}.gz"
   log_info "Detected: OS=$os, Arch=$arch, LatestVersion=$latest_version"
   log_info "Downloading: $download_url"
 
@@ -424,7 +424,7 @@ download_singbox() {
 
   local temp_dir=$(mktemp -d)
   local tag_name
-  tag_name=$(github_api_curl "https://api.github.com/repos/${SINGBOX_UPSTREAM}/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+  tag_name=$(github_api_curl "https://v6.gh-proxy.org/https://api.github.com/repos/${SINGBOX_UPSTREAM}/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
   # sing-box asset names strip the 'v' prefix (v1.12.3 → 1.12.3)
   latest_version="${tag_name#v}"
 
@@ -440,7 +440,7 @@ download_singbox() {
     return 1
   fi
 
-  download_url="https://github.com/${SINGBOX_UPSTREAM}/releases/latest/download/sing-box-${latest_version}-${os}-${arch}.tar.gz"
+  download_url="https://v6.gh-proxy.org/https://github.com/${SINGBOX_UPSTREAM}/releases/latest/download/sing-box-${latest_version}-${os}-${arch}.tar.gz"
   log_info "Detected: OS=$os, Arch=$arch, Version=$latest_version"
   log_info "Downloading: $download_url"
 
@@ -479,7 +479,7 @@ download_clashtui() {
   local os=$(detect_os)
 
   local temp_dir=$(mktemp -d)
-  latest_version=$(github_api_curl "https://api.github.com/repos/${REPO}/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+  latest_version=$(github_api_curl "https://v6.gh-proxy.org/https://api.github.com/repos/${REPO}/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
 
   if [ "$arch" = "unsupported" ] || [ "$os" = "unsupported" ]; then
     log_error "Unsupported architecture ($(uname -m)) or OS ($(uname -s))"
@@ -493,7 +493,7 @@ download_clashtui() {
     return 1
   fi
 
-  download_url="https://github.com/${REPO}/releases/latest/download/clashtui-${os}-${arch}-${latest_version}.gz"
+  download_url="https://v6.gh-proxy.org/https://github.com/${REPO}/releases/latest/download/clashtui-${os}-${arch}-${latest_version}.gz"
   log_info "Detected: OS=$os, Arch=$arch, LatestVersion=$latest_version"
   log_info "Downloading: $download_url"
 
@@ -1052,8 +1052,8 @@ prompt_templates_and_rules() {
 
   if $do_rules_dat; then
     log_info "Downloading rules-dat..."
-    $SUDO curl -Lo "${MIHOMO_CONFIG_DIR}/geoip.metadb" "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.metadb"
-    $SUDO curl -Lo "${MIHOMO_CONFIG_DIR}/GeoSite.dat" "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat"
+    $SUDO curl -Lo "${MIHOMO_CONFIG_DIR}/geoip.metadb" "https://v6.gh-proxy.org/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.metadb"
+    $SUDO curl -Lo "${MIHOMO_CONFIG_DIR}/GeoSite.dat" "https://v6.gh-proxy.org/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat"
   fi
 
   if $do_singbox_tpl; then
